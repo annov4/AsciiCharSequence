@@ -65,6 +65,18 @@ public class Main {
             }
             return new AsciiCharSequence(resultBytes);
         }
+        /*int i = 0;
+for (int j = 0; j < sequence1.bytes.length; j++) {
+    byte b = sequence1.bytes[j];
+    resultBytes[i] = b;
+    i++;
+}
+
+for (int j = 0; j < sequence2.bytes.length; j++) {
+    byte b = sequence2.bytes[j];
+    resultBytes[i] = b;
+    i++;
+} */
     }
 }
 
