@@ -6,7 +6,7 @@ public class Main {
         AsciiCharSequence sequence = new AsciiCharSequence(s);
         AsciiCharSequence result = sequence.subSequence(5);
         System.out.println(result.toString());
-        AsciiCharSequence result1 = sequence.delete(2, 5);
+        AsciiCharSequence result1 = sequence.delete(1, 4);
         System.out.println(result1);
     }
 
@@ -36,35 +36,35 @@ public class Main {
             }
             return new AsciiCharSequence(subArray);
         }
+
         @Override
         public String toString() {
             return new String(bytes);
         }
+
         public AsciiCharSequence subSequence(int start) {
             return (AsciiCharSequence) subSequence(start, bytes.length);
         }
-        public AsciiCharSequence delete(int from, int to) {
-            CharSequence subSequence1 = subSequence(0, from - 1);
-            CharSequence subSequence2 = subSequence(to, bytes.length);
-            StringBuilder sb = new StringBuilder();
-            sb.append(subSequence1).append(subSequence2);
-            byte[] result = new byte[sb.length()];
-            for (int i = 0; i < sb.length(); i++) {
-                result[i] = (byte) sb.charAt(i);
-            }
-            return new AsciiCharSequence(result);
-        }
-            /* byte[] result = new byte[bytes.length - (to - from + 1)] ;
-            int currentIndex = 0;
 
-            for (int i = 0; i < bytes.length; i++) {
-                if (i < from - 1 || i > to - 1) {
-                    result[currentIndex] = bytes[i];
-                    currentIndex++;
-                }
+        public AsciiCharSequence delete(int from, int to) {
+            CharSequence subSequence1 = subSequence(0, from);
+            CharSequence subSequence2 = subSequence(to + 1, bytes.length);
+            return concat((AsciiCharSequence) subSequence1, (AsciiCharSequence) subSequence2);
+        }
+
+        private AsciiCharSequence concat(AsciiCharSequence sequence1, AsciiCharSequence sequence2) {
+            byte[] resultBytes = new byte[sequence1.length() + sequence2.length()];
+            int i = 0;
+            for (byte b : sequence1.bytes) {
+                resultBytes[i] = b;
+                i++;
             }
-            return new AsciiCharSequence(result);
-        }*/
+            for (byte b : sequence2.bytes) {
+                resultBytes[i] = b;
+                i++;
+            }
+            return new AsciiCharSequence(resultBytes);
+        }
     }
 }
 
