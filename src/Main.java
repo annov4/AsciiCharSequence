@@ -36,19 +36,23 @@ public class Main {
             }
             return new AsciiCharSequence(subArray);
         }
-
         @Override
         public String toString() {
             return new String(bytes);
         }
-
         public AsciiCharSequence subSequence(int start) {
             return (AsciiCharSequence) subSequence(start, bytes.length);
         }
-
         public AsciiCharSequence delete(int from, int to) {
-            String subSequence = subSequence(0,from - 1) + subSequence(to).toString();
-            return new AsciiCharSequence(subSequence.toString().getBytes());
+            CharSequence subSequence1 = subSequence(0, from - 1);
+            CharSequence subSequence2 = subSequence(to, bytes.length);
+            StringBuilder sb = new StringBuilder();
+            sb.append(subSequence1).append(subSequence2);
+            byte[] result = new byte[sb.length()];
+            for (int i = 0; i < sb.length(); i++) {
+                result[i] = (byte) sb.charAt(i);
+            }
+            return new AsciiCharSequence(result);
         }
             /* byte[] result = new byte[bytes.length - (to - from + 1)] ;
             int currentIndex = 0;
